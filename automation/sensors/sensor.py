@@ -3,15 +3,15 @@ from sense_hat import SenseHat
 
 
 class Sensor():
-    this.sense = None
-    this.constant = None
+    self.sense = None
+    self.constant = None
 
     def __init__(self, constant):
-        this.sense = SenseHat()
-        this.constant = constant
+        self.sense = SenseHat()
+        self.constant = constant
 
     def getRawTemp(self):
-        this.sense.get_temperature()
+        self.sense.get_temperature()
     
     def calibrateTemp(self, temp):
         return getRawTemp() - temp
