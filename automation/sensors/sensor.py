@@ -1,6 +1,5 @@
 # sensor file for controlling the gathering of environmental data.  
 from sense_hat import SenseHat 
-import numpy
 
 
 class Sensor():
