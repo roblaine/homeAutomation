@@ -1,15 +1,19 @@
 # sensor file for controlling the gathering of environmental data.  
 from sense_hat import SenseHat 
+from GPIO import 
 
 
 class Sensor():
-    def __init__(self, constant):
+    def __init__(self, factor):
         self.sense = SenseHat()
-        self.constant = constant
+        self.factor = factor
 
     def getRawTemp(self):
-        self.sense.get_temperature()
+        """Returns the current temperature"""
+        return self.sense.get_temperature()
     
     def calibrateTemp(self, temp):
-        return getRawTemp() - temp
+        """Calculates the calibrated real temperature""" 
+        return (getRawTemp() - temp)
+
 
