@@ -13,11 +13,14 @@ class Weather():
     
     def get_weather(self):
         '''Retrieve the weather from a number of api's'''
-        #req = requests.get(self.weather_url).json()
-        req = json.loads('{"coord": {"lon": 144.96, "lat": -37.81}, "weather": [{"id": 500, "main": "Rain", "description": "light rain", "icon": "10n"}], "base": "stations", "main": {"temp": 291.82, "pressure": 1006, "humidity": 88, "temp_min": 291.15, "temp_max": 293.15}, "visibility": 10000, "wind": {"speed": 2.1, "deg": 50}, "clouds": {"all": 75}, "dt": 1544787240, "sys": {"type": 1, "id": 9554, "message": 0.0034, "country": "AU", "sunrise": 1544727125, "sunset": 1544780265}, "id": 2158177, "name": "Melbourne", "cod": 200}')
-        #if not req.ok():
-        #   # request failed, return None so we can catch this later
-        #   return None
+        req = requests.get(self.weather_url)
+        
+        if not req.ok:
+           # request failed, return None so we can catch this later
+           return None
+
+        # request was ok, convert it to json to get the data that we need
+        req = req.json()
         print("\n%s\n"  % (req))
         weather = {} 
         weather['description'] = req['weather'][0]['description']
