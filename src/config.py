@@ -17,8 +17,10 @@ This file contains all of the configuration values for the application.
 Update this file with the values for your specific Google Cloud project.
 You can create and manage projects at https://console.developers.google.com
 """
-
 import os
+from dotenv import load_dotenv
+load_dotenv(verbose=True)
+
 
 # The secret key is used by Flask to encrypt session cookies.
 SECRET_KEY = 'secret'
@@ -28,22 +30,22 @@ SECRET_KEY = 'secret'
 # configure the respective settings for the one you choose below.
 # You do not have to configure the other data backends. If unsure, choose
 # 'datastore' as it does not require any additional configuration.
-DATA_BACKEND = 'datastore'
+DATA_BACKEND = 'cloudsql'
 
 # Google Cloud Project ID. This can be found on the 'Overview' page at
 # https://console.developers.google.com
-PROJECT_ID = 'nimble-repeater-247613'
+PROJECT_ID = os.environ['PROJECT_ID']
 
 # CloudSQL & SQLAlchemy configuration
 # Replace the following values the respective values of your Cloud SQL
 # instance.
-CLOUDSQL_USER = 'raspberry-pi'
-CLOUDSQL_PASSWORD = ''
-CLOUDSQL_DATABASE = ''
+CLOUDSQL_USER = os.environ['DB_USER']
+CLOUDSQL_PASSWORD = os.environ['DB_PASS']
+CLOUDSQL_DATABASE = os.environ['DB_NAME']
 # Set this value to the Cloud SQL connection name, e.g.
 #   "project:region:cloudsql-instance".
 # You must also update the value in app.yaml.
-CLOUDSQL_CONNECTION_NAME = 'nimble-repeater-247613:australia-southeast1:home-automation-db'
+CLOUDSQL_CONNECTION_NAME = os.environ['CLOUD_SQL_CONNECTION_NAME']
 
 # The CloudSQL proxy is used locally to connect to the cloudsql instance.
 # To start the proxy, use:
@@ -53,6 +55,8 @@ CLOUDSQL_CONNECTION_NAME = 'nimble-repeater-247613:australia-southeast1:home-aut
 # Port 3306 is the standard MySQL port. If you need to use a different port,
 # change the 3306 to a different port number.
 
+# Whether running in prod or dev
+ENV = os.environ['ENV']
 
 # Local SQLITE3 database
 LOCAL_DEV_DATABASE_URI = (
@@ -73,7 +77,7 @@ LIVE_SQLALCHEMY_DATABASE_URI = (
   user=CLOUDSQL_USER, password=CLOUDSQL_PASSWORD,
   database=CLOUDSQL_DATABASE, connection_name=CLOUDSQL_CONNECTION_NAME)
 
-if os.environ.get('GAE_INSTANCE'):
+if os.environ['ENV'] == 'production':
   SQLALCHEMY_DATABASE_URI = LIVE_SQLALCHEMY_DATABASE_URI
 else:
   SQLALCHEMY_DATABASE_URI = LOCAL_SQLALCHEMY_DATABASE_URI
