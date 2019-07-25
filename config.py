@@ -37,7 +37,7 @@ PROJECT_ID = 'nimble-repeater-247613'
 # CloudSQL & SQLAlchemy configuration
 # Replace the following values the respective values of your Cloud SQL
 # instance.
-CLOUDSQL_USER = 'raspberryPi'
+CLOUDSQL_USER = 'raspberry-pi'
 CLOUDSQL_PASSWORD = ''
 CLOUDSQL_DATABASE = ''
 # Set this value to the Cloud SQL connection name, e.g.
@@ -53,21 +53,27 @@ CLOUDSQL_CONNECTION_NAME = 'nimble-repeater-247613:australia-southeast1:home-aut
 # Port 3306 is the standard MySQL port. If you need to use a different port,
 # change the 3306 to a different port number.
 
+
+# Local SQLITE3 database
+LOCAL_DEV_DATABASE_URI = (
+  'sqlite:///dev.db'
+)
+
 # Alternatively, you could use a local MySQL instance for testing.
 LOCAL_SQLALCHEMY_DATABASE_URI = (
-    'mysql+pymysql://{user}:{password}@127.0.0.1:3306/{database}').format(
-        user=CLOUDSQL_USER, password=CLOUDSQL_PASSWORD,
-        database=CLOUDSQL_DATABASE)
+  'mysql+pymysql://{user}:{password}@127.0.0.1:3306/{database}').format(
+  user=CLOUDSQL_USER, password=CLOUDSQL_PASSWORD,
+  database=CLOUDSQL_DATABASE)
 
 # When running on App Engine a unix socket is used to connect to the cloudsql
 # instance.
 LIVE_SQLALCHEMY_DATABASE_URI = (
-    'mysql+pymysql://{user}:{password}@localhost/{database}'
-    '?unix_socket=/cloudsql/{connection_name}').format(
-        user=CLOUDSQL_USER, password=CLOUDSQL_PASSWORD,
-        database=CLOUDSQL_DATABASE, connection_name=CLOUDSQL_CONNECTION_NAME)
+  'mysql+pymysql://{user}:{password}@localhost/{database}'
+  '?unix_socket=/cloudsql/{connection_name}').format(
+  user=CLOUDSQL_USER, password=CLOUDSQL_PASSWORD,
+  database=CLOUDSQL_DATABASE, connection_name=CLOUDSQL_CONNECTION_NAME)
 
 if os.environ.get('GAE_INSTANCE'):
-    SQLALCHEMY_DATABASE_URI = LIVE_SQLALCHEMY_DATABASE_URI
+  SQLALCHEMY_DATABASE_URI = LIVE_SQLALCHEMY_DATABASE_URI
 else:
-    SQLALCHEMY_DATABASE_URI = LOCAL_SQLALCHEMY_DATABASE_URI
+  SQLALCHEMY_DATABASE_URI = LOCAL_SQLALCHEMY_DATABASE_URI
