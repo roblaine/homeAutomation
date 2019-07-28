@@ -32,7 +32,7 @@ def read_temp():
       temp_c = float(temp_string) / 1000.0
       return datetime.now().strftime('%s'), temp_c, 'Living Room'
   else:
-    return datetime.now().strftime('%s'), 999, 'Living Room'
+    return datetime.now().strftime('%s'), -999, 'Living Room'
 
 def save_to_db(timestamp, temp_val, location):
   # Create the insert object
