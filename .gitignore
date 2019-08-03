@@ -95,3 +95,6 @@ ENV/
 
 # Cloud SQL Proxy
 cloud_sql_proxy
+
+# Local sqlite3 db
+*.db
