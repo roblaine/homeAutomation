@@ -1,0 +1,7 @@
+language: python
+branches:
+  only:
+  - master
+  - dev
+install: pip install -r requirements.txt
+
