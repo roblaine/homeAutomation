@@ -10,7 +10,7 @@ def run():
   while True:
     # Log the current temperature into the database
     timestamp, curr_temp, location = temp.read_temp()
-    print('\n{}\n{}\n{}\n'.format(timestamp, curr_temp, location))
+    print('\nSaving the following tuple:\n{}\n{}\n{}\n'.format(timestamp, curr_temp, location))
     temp.save_to_db(timestamp=timestamp, temp_val=curr_temp, location=location)
     # Wait 60 seconds
     time.sleep(60)
