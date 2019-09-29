@@ -11,13 +11,14 @@ const cn = {
 }
 var db = pgp(cn)
 
-/* GET temps listing. */
+// GET all temps
 router.get('/', function(req, res, next) {
   db.many('SELECT * FROM TEMPERATURES')
     .then(function (data) {
       console.log('DATA:', data)
+      // Return the json data
       res.json({
-        message: data
+        data: data
       });
     })
     .catch(function (error) {
@@ -26,15 +27,24 @@ router.get('/', function(req, res, next) {
 
 });
 
+// GET temperature by id
 router.get('/:id', function(req, res, next) {
   db.any('SELECT * FROM TEMPERATURES WHERE ID = $1', [req.params.id])
     .then(function(data) {
-      console.log(data)
+      console.log('DATA:', data)
+      // Return the data
+      res.json({
+        data: data
+      })
     })
     .catch(function(error) {
-      console.log(error)
+      console.log('ERROR:', error)
     });
-    res.json({data: data})
+});
+
+// POST temperature to the server
+router.post('/:id', function(req, res, next) {
+
 });
 
 module.exports = router;
