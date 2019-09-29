@@ -1,33 +1,40 @@
 var express = require('express');
 var router = express.Router();
-var pgp = require('pg-promise')(/* options */)
-var db = pgp('postgres://postgres@localhost:5432/postgres')
+const initOptions = {/* initialization options */};
+var pgp = require('pg-promise')(initOptions)
+const cn = {
+  host: 'localhost',
+  port: 5432,
+  database: 'postgres',
+  user: 'postgres',
+  password: ''
+}
+var db = pgp(cn)
 
 /* GET temps listing. */
 router.get('/', function(req, res, next) {
-
   db.one('SELECT $1 AS value', 123)
-  .then(function (data) {
-    console.log('DATA:', data.value)
-  })
-  .catch(function (error) {
-    console.log('ERROR:', error)
-  })
+    .then(function (data) {
+      console.log('DATA:', data.value)
+    })
+    .catch(function (error) {
+      console.log('ERROR:', error)
+    })
 
-  res.send('{"message": "Did some db stuff"}');
+  res.json({
+    message: "Did some db stuff"
+  });
 });
 
 router.get('/:id', function(req, res, next) {
-  db.one('SELECT $1 AS value', req.params.id)
-  .then(function(data) {
-    // Construct the return object
-
-  })
-  .catch(function (error) {
-    console.log('ERROR:', error)
-  })
-  // Respond with the object that was requested
-  res.send(`{"id":"${req.params.id}", "data": "${data.value}"}`)
+  db.any('SELECT * FROM temps WHERE id = $1', [req.params.id])
+    .then(function(data) {
+      console.log(data)
+    })
+    .catch(function(error) {
+      console.log(error)
+    });
+    res.json({data: data})
 });
 
 module.exports = router;
