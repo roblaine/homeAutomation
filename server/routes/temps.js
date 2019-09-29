@@ -13,21 +13,21 @@ var db = pgp(cn)
 
 /* GET temps listing. */
 router.get('/', function(req, res, next) {
-  db.one('SELECT $1 AS value', 123)
+  db.many('SELECT * FROM TEMPERATURES')
     .then(function (data) {
-      console.log('DATA:', data.value)
+      console.log('DATA:', data)
+      res.json({
+        message: data
+      });
     })
     .catch(function (error) {
       console.log('ERROR:', error)
     })
 
-  res.json({
-    message: "Did some db stuff"
-  });
 });
 
 router.get('/:id', function(req, res, next) {
-  db.any('SELECT * FROM temps WHERE id = $1', [req.params.id])
+  db.any('SELECT * FROM TEMPERATURES WHERE ID = $1', [req.params.id])
     .then(function(data) {
       console.log(data)
     })
