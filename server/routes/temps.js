@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
       console.log('DATA:', data)
       // Return the json data
       res.json({
-        data: data
+        data
       });
     })
     .catch(function (error) {
@@ -29,12 +29,19 @@ router.get('/', function(req, res, next) {
 
 // GET temperature by id
 router.get('/:id', function(req, res, next) {
-  db.any('SELECT * FROM TEMsPERATURES WHERE ID = $1', [req.params.id])
+
+  if(typeof req.params.id != 'number') {
+    res.json({
+      message: `${req.params.id} is not a number`
+    })
+  }
+
+  db.any('SELECT * FROM TEMPERATURES WHERE ID = $1', [req.params.id])
     .then(function(data) {
       console.log('DATA:', data)
       // Return the data
       res.json({
-        data: data
+        data
       })
     })
     .catch(function(error) {
