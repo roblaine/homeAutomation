@@ -7,7 +7,8 @@ class Weather():
         """Class to find weather reports and interpret the data"""
         self.dt = None # daily temp
         self.dh = None # daily humidity
+
     def getWeather(self):
         """queries api for the weather and stores the information
         """
-        return None
+        pass

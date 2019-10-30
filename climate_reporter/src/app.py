@@ -1,7 +1,9 @@
+import time
+
 import config
 import db.database as db
 import temp_sense.temp as temp
-import time
+
 
 
 def run():
