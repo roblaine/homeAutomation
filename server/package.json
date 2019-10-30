@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "drop-db": "psql -U postgres -d postgres -h localhost -f db/drop.sql",
+    "setup-db": "psql -U postgres -d postgres -h localhost -f db/schema.sql",
+    "seed-db": "psql -U postgres -d postgres -h localhost -f db/seed.sql",
+    "make-db": "docker run -d --name ha-db -p 5432:5432 postgres && setup-db",
+    "remake-db": "npm run drop-db && npm run setup-db",
+    "stop-db": "docker stop ha-db",
+    "start-db": "docker start ha-db",
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "pg-promise": "^9.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  }
+}

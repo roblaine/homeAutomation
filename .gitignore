@@ -96,5 +96,7 @@ ENV/
 # Cloud SQL Proxy
 cloud_sql_proxy
 
+# Node
+node_modules/
 # Local sqlite3 db
 *.db
