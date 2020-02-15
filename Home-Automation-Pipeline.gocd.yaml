@@ -21,9 +21,9 @@ pipelines:
           allow_only_on_success: false
         jobs:
           run-unit-tests:
-            timeout: 0
+            timeout: 5
             tasks:
             - exec:
-                command: npm run test
+                command: npm test
                 working_directory: server
                 run_if: passed
