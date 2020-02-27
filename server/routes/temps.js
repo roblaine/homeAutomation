@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const initOptions = {/* initialization options */};
+
+// TODO: Change config to use mysql database
 var pgp = require('pg-promise')(initOptions)
 const cn = {
   host: 'localhost',
