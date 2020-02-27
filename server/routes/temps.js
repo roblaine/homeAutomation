@@ -14,47 +14,30 @@ db.connect()
 
 // GET all temps
 router.get('/', function(req, res, next) {
-	db.query('SELECT * FROM temps', function(err, rows, fields) {
-		if (err) throw err
+	db.query('SELECT * FROM temps', function(err, data, fields) {
+		if (err) {
+      console.log(err);
+      throw (err);
+    }
 
-		res.json({rows});
+		res.json({ temps: data });
 	});
-
-/*
-	db.many('SELECT * FROM TEMPERATURES')
-    .then(function (data) {
-      console.log('DATA:', data)
-      // Return the json data
-      res.json({
-        data
-      });
-    })
-    .catch(function (error) {
-      console.log('ERROR:', error)
-    })
-*/
 });
 
 // GET temperature by id
 router.get('/:id', function(req, res, next) {
 
-  if(typeof req.params.id != 'number') {
+  if (isNaN(req.params.id)) {
     res.json({
-      message: `${req.params.id} is not a number`
-    })
-  }
-
-  db.any('SELECT * FROM TEMPERATURES WHERE ID = $1', [req.params.id])
-    .then(function(data) {
-      console.log('DATA:', data)
-      // Return the data
-      res.json({
-        data
-      })
-    })
-    .catch(function(error) {
-      console.log('ERROR:', error)
+      error: `Id must be an integer, instead was ${typeof req.params.id}`
     });
+    return;
+  };
+
+  db.query(`SELECT * FROM temps WHERE ID = ${req.params.id}`,
+      function(err, data, fields) {
+    res.json({ data });
+  });
 });
 
 // POST temperature to the server
@@ -63,13 +46,13 @@ router.post('/new', function(req, res, next) {
   console.log(req.body);
   // console.log(req.params.length);
 
-  if(!req.body || req.body.length < 2) {
+  if (!req.body || req.body.length < 3) {
     res.json({
-      error: "Must have 2 args"
+      error: "Insert API query must have 3 args"
     });
   }
 
-  db.one('INSERT INTO TEMPERATURES(temperature, location) VALUES($1, $2) RETURNING *', [req.body.temperature, req.body.location])
+  db.query('INSERT INTO temps(temperature, location, recorded_at) VALUES($1, $2, $3) RETURNING *', [req.body.temperature, req.body.location, time.now()])
     .then(data => {
       console.log('Created new temp object: ', data.id);
       res.json(data)
