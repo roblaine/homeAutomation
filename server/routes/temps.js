@@ -1,21 +1,27 @@
 var express = require('express');
 var router = express.Router();
-const initOptions = {/* initialization options */};
+var mysql = require('mysql')
 
-// TODO: Change config to use mysql database
-var pgp = require('pg-promise')(initOptions)
-const cn = {
-  host: 'localhost',
-  port: 5432,
-  database: 'postgres',
-  user: 'postgres',
-  password: ''
-}
-var db = pgp(cn)
+var db = mysql.createConnection({
+  host: '10.0.0.74',
+  port: 3306,
+  database: 'mysql_db',
+  user: 'admin',
+  password: 'admin_password'
+})
+
+db.connect()
 
 // GET all temps
 router.get('/', function(req, res, next) {
-  db.many('SELECT * FROM TEMPERATURES')
+	db.query('SELECT * FROM temps', function(err, rows, fields) {
+		if (err) throw err
+
+		res.json({rows});
+	});
+
+/*
+	db.many('SELECT * FROM TEMPERATURES')
     .then(function (data) {
       console.log('DATA:', data)
       // Return the json data
@@ -26,7 +32,7 @@ router.get('/', function(req, res, next) {
     .catch(function (error) {
       console.log('ERROR:', error)
     })
-
+*/
 });
 
 // GET temperature by id
