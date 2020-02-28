@@ -3,7 +3,7 @@ var router = express.Router();
 var mysql = require('mysql')
 
 var db = mysql.createConnection({
-  host: '10.0.0.74',
+  host: 'localhost',
   port: 3306,
   database: 'mysql_db',
   user: 'admin',
@@ -11,6 +11,7 @@ var db = mysql.createConnection({
 })
 
 db.connect()
+db.query('CREATE TABLE IF NOT EXISTS temps(id int NOT NULL AUTO_INCREMENT, temperature float NOT NULL, location VARCHAR(50) NOT NULL, recorded_at TIMESTAMP NOT NULL, primary key(id));')
 
 // GET all temps
 router.get('/', function(req, res, next) {
@@ -52,17 +53,16 @@ router.post('/new', function(req, res, next) {
     });
   }
 
-  db.query('INSERT INTO temps(temperature, location, recorded_at) VALUES($1, $2, $3) RETURNING *', [req.body.temperature, req.body.location, time.now()])
-    .then(data => {
-      console.log('Created new temp object: ', data.id);
-      res.json(data)
+  db.query(`INSERT INTO temps(temperature, location, recorded_at) VALUES(${req.body.temperature}, ${req.body.location}, ${req.body.recorded_at})`, function(err, data, fields) {
+    if (err) {
+      console.log(err);
+    }
+    res.json({
+      data
     })
-    .catch(error => {
-      console.log('ERROR:', error); // print error;
-      res.json({
-        error: `Failed to insert into database: ${error}`
-      })
-    });
+
+  });
+
 });
 
 module.exports = router;
