@@ -53,16 +53,16 @@ router.post('/new', function(req, res, next) {
     });
   }
 
-  db.query(`INSERT INTO temps(temperature, location, recorded_at) VALUES(${req.body.temperature}, ${req.body.location}, ${req.body.recorded_at})`, function(err, data, fields) {
+  db.query(`INSERT INTO temps(temperature, location, recorded_at)
+      VALUES(${req.body.temperature}, ${req.body.location}, ${req.body.recorded_at})`,
+      function(err, data, fields) {
     if (err) {
       console.log(err);
     }
     res.json({
       data
     })
-
   });
-
 });
 
 module.exports = router;
