@@ -5,7 +5,7 @@ import db.database as db
 
 
 class ReadFileBasedSensor():
-    """Class to read and record the value of a digital sensor such as the DS18B20. 
+    """Class to read and record the value of a digital sensor such as the DS18B20.
 
         Reads from a filepath to return the contents of a file on disk that contains the data from the sensor.
     """
@@ -16,12 +16,12 @@ class ReadFileBasedSensor():
 
     def set_path(self, f_path):
         self.f_path = f_path
-    
+
     def read_raw_value(self):
         """Reads the raw value of the sensor and returns the lines from the file"""
         with open(self.f_path, 'r') as sensor:
             return sensor.readlines()
-    
+
     def read_value(self):
         """Reads the value of the sensor
         """
@@ -37,11 +37,12 @@ class ReadFileBasedSensor():
 # TODO: Refactor this as a class
 # Set up the temperature sensors
 if config.ENV == 'production':
-  os.system('modprobe w1-gpio')
-  os.system('modprobe w1-therm')
-  
+  # Do this on the device
+  # os.system('modprobe w1-gpio')
+  # os.system('modprobe w1-therm')
+
   # TODO fix the logic to handle more than one device on line 15
-  base_dir = '/sys/bus/w1/devices/'
+  base_dir = '/sensors' # Volume mount this in docker run command '/sys/bus/w1/devices/'
   device_folder = glob.glob(base_dir + '28*')[0]
   device_file = device_folder + '/w1_slave'
 
