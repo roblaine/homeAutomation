@@ -4,7 +4,7 @@ import config
 import db.database as db
 
 
-class ReadFileBasedSensor():
+class FileBasedSensor():
     """Class to read and record the value of a digital sensor such as the DS18B20.
 
         Reads from a filepath to return the contents of a file on disk that contains the data from the sensor.
@@ -25,11 +25,12 @@ class ReadFileBasedSensor():
     def read_value(self):
         """Reads the value of the sensor
         """
-        pass
+        return ret_val
 
-    def format_data(self):
+    def format_data(self, unformatted_data):
         """Formats the data so that it can be saved as a tuple
         """
+        # formatted_data = unformatted_data.strftime('%Y-%M-%d %H-%M-%s+0000')
         pass
 
 
@@ -53,24 +54,24 @@ def read_temp_raw():
   return lines
 
 def read_temp():
-  if config.ENV == 'production':
-    lines = read_temp_raw()
-    while lines[0].strip()[-3:] != 'YES':
-      time.sleep(0.2)
-      lines = read_temp_raw()
-    equals_pos = lines[1].find('t=')
-    if equals_pos != -1:
-      temp_string = lines[1][equals_pos+2:]
-      temp_c = float(temp_string) / 1000.0
-      return datetime.now().strftime('%s'), temp_c, 'Living Room'
-  else:
-    return datetime.now().strftime('%s'), -999, 'Living Room'
+      if config.ENV == 'production':
+            lines = read_temp_raw()
+            while lines[0].strip()[-3:] != 'YES':
+                  time.sleep(0.2)
+                  lines = read_temp_raw()
+            equals_pos = lines[1].find('t=')
+            if equals_pos != -1:
+                  temp_string = lines[1][equals_pos+2:]
+                  temp_c = float(temp_string) / 1000.0
+                  return datetime.now().strftime('%s'), temp_c, 'Living Room'
+      else:
+          return datetime.now().strftime('%s'), -999, 'Living Room'
 
 def save_to_db(timestamp, temp_val, location):
-  # Create the insert object
-  ins = db.temperatures.insert().values(location=location,temperature=temp_val,time=timestamp)
-  # Compile and insert a new entry
-  ins.compile().params
-  res = db.connection.execute(ins)
-  # Print the obejct to confirm that it was inserted
-  print(res)
+      # Create the insert object
+      ins = db.temperatures.insert().values(location=location,temperature=temp_val,time=timestamp)
+      # Compile and insert a new entry
+      ins.compile().params
+      res = db.connection.execute(ins)
+      # Print the obejct to confirm that it was inserted
+      print(res)
