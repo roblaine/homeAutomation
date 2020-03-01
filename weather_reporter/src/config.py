@@ -22,7 +22,7 @@ LOCAL_SQLALCHEMY_DATABASE_URI = (
 
 # Connect directly via the ipv4 address
 LIVE_SQLALCHEMY_DATABASE_URI = (
-  'postgresql://{user}:{password}@{cloud_sql_address}/{database}').format(
+  'mysql+pymysql://{user}:{password}@{cloud_sql_address}/{database}').format(
   user=CLOUDSQL_USER, password=CLOUDSQL_PASSWORD,
   cloud_sql_address=CLOUDSQL_ADDRESS, database=CLOUDSQL_DATABASE)
 
