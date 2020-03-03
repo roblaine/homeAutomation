@@ -17,6 +17,9 @@ class FileBasedSensor():
         self.s_type = s_type
         self.f_path = f_path
 
+    def get_name(self):
+        return self.name
+
     def set_path(self, f_path):
         """Sets the path of the sensor on disk.
 
