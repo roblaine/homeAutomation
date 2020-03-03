@@ -25,7 +25,7 @@ class FileBasedSensor():
     def read_value(self):
         """Reads the value of the sensor
         """
-        return ret_val
+        pass
 
     def format_data(self, unformatted_data):
         """Formats the data so that it can be saved as a tuple
