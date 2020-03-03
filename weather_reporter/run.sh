@@ -4,8 +4,9 @@
 #modprobe w1-therm
 
 
-docker build -tweather_sensor_alpine .
+docker build --force-rm -t weather_sensor_alpine .
 docker run \
-	-it \
+	-d \
 	--mount type=bind,source=`pwd`/tests/devices/,target=/sensors \
 	weather_sensor_alpine
+

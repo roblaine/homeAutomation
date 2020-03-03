@@ -3,7 +3,7 @@ var router = express.Router();
 var mysql = require('mysql')
 
 var db = mysql.createConnection({
-  host: 'localhost',
+  host: '10.0.0.74',
   port: 3306,
   database: 'mysql_db',
   user: 'admin',
@@ -44,7 +44,7 @@ router.get('/:id', function(req, res, next) {
 // POST temperature to the server
 router.post('/new', function(req, res, next) {
   // Validate that the posted object is correct
-  console.log(req.body);
+  console.log(req.params.length);
   // console.log(req.params.length);
 
   if (!req.body || req.body.length < 3) {
@@ -53,8 +53,8 @@ router.post('/new', function(req, res, next) {
     });
   }
 
-  db.query(`INSERT INTO temps(temperature, location, recorded_at)
-      VALUES(${req.body.temperature}, ${req.body.location}, ${req.body.recorded_at})`,
+  db.query(`INSERT INTO temps(temperature, location, recorded_at) \
+      VALUES(${req.body.temperature}, "${req.body.location}", "${req.body.recorded_at}")`,
       function(err, data, fields) {
     if (err) {
       console.log(err);
