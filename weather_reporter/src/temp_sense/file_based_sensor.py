@@ -6,6 +6,13 @@ class FileBasedSensor():
     """
 
     def __init__(self, name, s_type, f_path):
+        """Args:
+
+            name (String): Name of the location of the sensor
+            s_type (String): Type of sensor
+            f_path (String): Location of the file containing the raw data
+        """
+
         self.name = name
         self.s_type = s_type
         self.f_path = f_path
