@@ -4,6 +4,7 @@ var mysql = require('mysql')
 var db = require('../db/connection').db
 
 db.connect()
+
 db.query('CREATE TABLE IF NOT EXISTS temps(id int NOT NULL AUTO_INCREMENT, temperature float NOT NULL, location VARCHAR(50) NOT NULL, recorded_at TIMESTAMP NOT NULL, primary key(id));')
 
 // GET all temps

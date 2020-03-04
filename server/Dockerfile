@@ -7,8 +7,9 @@ RUN npm install --prefix=/install
 
 FROM base
 COPY --from=builder /install/node_modules/ /usr/lib/node_modules/
-WORKDIR /app
-COPY src/ .
-COPY bin/ .
+WORKDIR /src
+ADD src/ .
+ADD bin/ ./bin/
+
 EXPOSE 3000
-ENTRYPOINT ["node", "www"]
+ENTRYPOINT ["node", "bin/www"]
