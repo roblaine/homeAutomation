@@ -1,14 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql')
-
-var db = mysql.createConnection({
-  host: '10.0.0.74',
-  port: 3306,
-  database: 'mysql_db',
-  user: 'admin',
-  password: 'admin_password'
-})
+var db = require('../db/connection').db
 
 db.connect()
 db.query('CREATE TABLE IF NOT EXISTS temps(id int NOT NULL AUTO_INCREMENT, temperature float NOT NULL, location VARCHAR(50) NOT NULL, recorded_at TIMESTAMP NOT NULL, primary key(id));')
