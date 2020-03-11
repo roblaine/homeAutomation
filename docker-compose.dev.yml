@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  server:
+    image: weather_server:dev
+    build:
+      context: ./server
+    container_name: weather_server_dev
+    restart: on-failure
+    depends_on:
+      - mysql
+    env_file: ./server/.env.dev
+    environment:
+      - DB_ADDR=mysql
+    ports:
+      - "8080:3000"
+    networks:
+      - backend
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=my-password
+      - MYSQL_DATABASE=mysql_db
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin_password
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+
+networks:
+  backend:

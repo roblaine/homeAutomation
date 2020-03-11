@@ -11,6 +11,6 @@ ENV NODE_PATH '/usr/lib/node_modules:/src/node_modules'
 WORKDIR /src
 ADD src/ .
 ADD bin/ /bin/
-ADD .env.production .env
+ADD .env .env
 EXPOSE 3000
 ENTRYPOINT ["node", "/bin/www"]

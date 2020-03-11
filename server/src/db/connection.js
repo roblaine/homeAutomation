@@ -1,10 +1,14 @@
 var mysql = require('mysql')
-var env_vars = require('../config/config').parsed
+const { dbAddr, dbPort, dbUser, dbName, dbPassword } = require('../config/config')
 
-module.exports.db = mysql.createConnection({
-  host: env_vars.DB_ADDR,
-  port: 3306,
-  database: env_vars.DB_DB,
-  user: env_vars.DB_USER,
-  password: env_vars.DB_PASS
+var db = mysql.createConnection({
+  host: dbAddr,
+  port: dbPort,
+  database: dbName,
+  user: dbUser,
+  password: dbPassword
 })
+
+module.exports = {
+  db: db
+}

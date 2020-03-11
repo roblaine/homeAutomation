@@ -1,4 +1,9 @@
-var env_vars = require('dotenv').config()
-console.log(env_vars)
+// require('dotenv').config()
 
-module.exports = env_vars
+module.exports = {
+  dbAddr: process.env.DB_ADDR,
+  dbPort: process.env.DB_PORT,
+  dbUser: process.env.DB_USER,
+  dbName: process.env.DB_NAME,
+  dbPassword: process.env.DB_PASS
+}

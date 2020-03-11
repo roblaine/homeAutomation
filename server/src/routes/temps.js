@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql')
-var db = require('../db/connection').db
+const { db } = require('../db/connection')
 
 db.connect()
 
