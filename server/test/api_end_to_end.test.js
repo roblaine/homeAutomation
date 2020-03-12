@@ -6,6 +6,9 @@ describe('API Testing', () => {
 	describe('Temps endpoints', () => {
 		it('Temps endpoint should return JSON with keys: [id, location, temperature, recorded_at]',
 		() => {
+			expectedKeys = ['id', 'location', 'recorded_at', 'temperature'];
+			let parsedData = '';
+
 	    http.get({
 				hostname: 'localhost',
 				port: 8080,
@@ -16,9 +19,9 @@ describe('API Testing', () => {
 			  res.on('data', (chunk) => { rawData += chunk; });
 			  res.on('end', () => {
 					try {
-						const parsedData = JSON.parse(rawData);
-
-						expect(parsedData).to.have.all.keys('id', 'location', 'recorded_at', 'temperature');
+						// TODO: Fix this. The test always passes.
+						parsedData = JSON.parse(rawData);
+						expect(parsedData).to.have.all.keys(expectedKeys);
 					} catch (e) {
 						return;
 					}
