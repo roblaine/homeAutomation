@@ -1,4 +1,4 @@
-var expect  = require('chai').expect;
+var expect = require('chai').expect;
 var http = require('http');
 
 describe('API Testing', () => {
@@ -18,13 +18,9 @@ describe('API Testing', () => {
 				let rawData = '';
 			  res.on('data', (chunk) => { rawData += chunk; });
 			  res.on('end', () => {
-					try {
-						// TODO: Fix this. The test always passes.
-						parsedData = JSON.parse(rawData);
-						expect(parsedData).to.have.all.keys(expectedKeys);
-					} catch (e) {
-						return;
-					}
+					// TODO: Fix this. The test always passes.
+					parsedData = JSON.parse(rawData);
+					expect(parsedData).to.have.all.keys(expectedKeys);
 				});
 	    });
 		});
