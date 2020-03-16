@@ -22,6 +22,6 @@ describe('API Testing', () => {
             expect(parsedData).to.have.all.keys(expectedKeys);
           });
 	    });
-      });
+    });
   });
 });
