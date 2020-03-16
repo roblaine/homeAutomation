@@ -1,14 +1,16 @@
-var mysql = require('mysql')
-const { dbAddr, dbPort, dbUser, dbName, dbPassword } = require('../config/config')
+const mysql = require('mysql');
+const {
+  dbAddr, dbPort, dbUser, dbName, dbPassword,
+} = require('../config/config');
 
-var db = mysql.createConnection({
+const db = mysql.createConnection({
   host: dbAddr,
   port: dbPort,
   database: dbName,
   user: dbUser,
-  password: dbPassword
-})
+  password: dbPassword,
+});
 
 module.exports = {
-  db: db
-}
+  db,
+};
