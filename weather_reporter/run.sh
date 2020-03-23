@@ -6,7 +6,7 @@
 
 docker build --force-rm -t weather_sensor_alpine .
 docker run \
-	-d \
+	-it \
 	--mount type=bind,source=`pwd`/tests/devices/,target=/sensors \
 	weather_sensor_alpine
 

@@ -8,9 +8,11 @@ RUN npm install --prefix=/install
 FROM base
 COPY --from=builder /install/node_modules/ /usr/lib/node_modules/
 ENV NODE_PATH '/usr/lib/node_modules:/src/node_modules'
+EXPOSE 3000
+
 WORKDIR /src
 ADD src/ .
 ADD bin/ /bin/
 ADD .env .env
-EXPOSE 3000
+
 ENTRYPOINT ["node", "/bin/www"]

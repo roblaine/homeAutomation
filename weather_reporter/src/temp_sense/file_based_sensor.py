@@ -5,16 +5,16 @@ class FileBasedSensor():
     contains the data from the sensor.
     """
 
-    def __init__(self, name, s_type, f_path):
+    def __init__(self, name, s_id, f_path):
         """Args:
 
             name (String): Name of the location of the sensor
-            s_type (String): Type of sensor
+            s_id (String): ID of sensor
             f_path (String): Location of the file containing the raw data
         """
 
         self.name = name
-        self.s_type = s_type
+        self.s_id = s_id
         self.f_path = f_path
 
     def get_name(self):
@@ -43,9 +43,11 @@ class FileBasedSensor():
         Returns:
             The lines from the sensor's file.
         """
-
-        with open(self.f_path, 'r') as sensor:
-            return sensor.readlines()
+        try:
+            with open(self.f_path, 'r') as sensor:
+                return sensor.readlines()
+        except FileNotFoundError:
+            print('Unable to read file for sensor')
 
     def get_value(self, s_lines):
         """Gets the value of the sensor from the lines read from read_raw_values
