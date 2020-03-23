@@ -2,25 +2,30 @@ from glob import glob
 from config import *
 from datetime import datetime as dt
 from time import sleep
+import os
 import requests
 
 from temp_sense.file_based_sensor import FileBasedSensor as fbs
 
 
 def run():
-    sensors_path = '/sensors/**'
+    sensors_path = '/devices/**'
+
+    if RUNNING_IN_CONTAINER == 'False':
+        sensors_path = '/sys/bus/w1/devices/**'
+
     sensors_glob = glob(sensors_path)
     print(sensors_glob)
 
     sensors = []
     for sensor_path in sensors_glob:
-        sensor_id = sensor_path.split('sensors/')[1]
+        sensor_id = sensor_path.split('devices/')[1]
         sensors.append(fbs('Bedroom', sensor_id, sensor_path + '/w1_slave'))
 
     for sensor in sensors:
         print(sensor.read_temp())
 
-    
+
 # TODO: Use the sensor ID in the database entry
 # bedroom_temp = fbs('Bedroom', 'DS18B20', '/sensors/28-00000000000000/w1_slave')
 #

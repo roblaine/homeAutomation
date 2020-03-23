@@ -1,12 +1,7 @@
-
-# Initaialise the modules
-#modprobe w1-gpio
-#modprobe w1-therm
-
+#!/usr/bin/env bash
 
 docker build --force-rm -t weather_sensor_alpine .
 docker run \
 	-it \
-	--mount type=bind,source=`pwd`/tests/devices/,target=/sensors \
+	--mount type=bind,source=`pwd`/tests/devices/,target=/devices \
 	weather_sensor_alpine
-
