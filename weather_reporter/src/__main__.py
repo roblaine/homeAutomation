@@ -2,6 +2,7 @@ from glob import glob
 from config import *
 from datetime import datetime as dt
 from time import sleep
+from datetime import datetime
 import os
 import requests
 
@@ -14,7 +15,7 @@ def run():
     if RUNNING_IN_CONTAINER == 'False':
         sensors_path = '/sys/bus/w1/devices/**'
 
-    sensors_glob = glob(sensors_path)
+    sensors_glob = glob(sensors_path + '28**')
     print(sensors_glob)
 
     sensors = []
@@ -24,28 +25,21 @@ def run():
 
     for sensor in sensors:
         print(sensor.read_temp())
+        # POST data to the server /temps/new endpoint
+        temperature = sensor.read_temp()
+        recorded_at = datetime.utcnow().strftime('%Y-%M-%d %H:%m:%S')
+        payload = {'temperature': temperature,
+                'sensor_id': sensor.s_id,
+                'location': sensor.get_name(),
+                'recorded_at': recorded_at}
 
+        # Send the date to the server for processing
+        new_temp_ep = '/temps/new'
+        url = SERVER + new_temp_ep
+        print(url)
 
-# TODO: Use the sensor ID in the database entry
-# bedroom_temp = fbs('Bedroom', 'DS18B20', '/sensors/28-00000000000000/w1_slave')
-#
-# def run():
-#     # Log the current temperature into the database
-#     curr_temp = bedroom_temp.read_temp()
-#     timestamp = dt.utcnow().strftime('%Y-%m-%d %H:%M:%S')
-#
-#     # Send the date to the server for processing
-#     new_temp_ep = '/temps/new'
-#     url = SERVER + new_temp_ep
-#     print(url)
-#
-#     payload = {'temperature': curr_temp,
-#             'location': bedroom_temp.get_name(),
-#             'recorded_at': timestamp}
-#
-#     r = requests.post(url, data=payload)
-#
-#     print(r.json(), r.status_code)
+        r = requests.post(url, data=payload)
+        print(r.json())
 
 if __name__ == '__main__':
   run()
