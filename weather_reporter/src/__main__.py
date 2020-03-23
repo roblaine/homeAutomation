@@ -24,11 +24,11 @@ def run():
         sensors.append(fbs('Bedroom', sensor_id, sensor_path + '/w1_slave'))
 
     for sensor in sensors:
-        print(sensor.read_temp())
         # POST data to the server /temps/new endpoint
         temperature = sensor.read_temp()
         recorded_at = datetime.utcnow().strftime('%Y-%M-%d %H:%m:%S')
-        payload = {'temperature': temperature,
+        payload = {
+                'temperature': temperature,
                 'sensor_id': sensor.s_id,
                 'location': sensor.get_name(),
                 'recorded_at': recorded_at}
