@@ -15,14 +15,16 @@ db.destroy();
 // GET all temps
 router.get('/', (req, res, next) => {
   db.connect();
+
   db.query('SELECT * FROM temps', (err, data, fields) => {
     if (err) {
       console.log(err);
       throw (err);
     }
-    db.destroy();
     res.json({ temps: data });
   });
+
+  db.destroy();
 });
 
 // GET temperature by id
