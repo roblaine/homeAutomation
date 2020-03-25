@@ -10,12 +10,8 @@ db.query('CREATE TABLE IF NOT EXISTS \
     recorded_at TIMESTAMP NOT NULL, \
     primary key(id));');
 
-db.destroy();
-
 // GET all temps
 router.get('/', (req, res, next) => {
-  db.connect();
-
   db.query('SELECT * FROM temps', (err, data, fields) => {
     if (err) {
       console.log(err);
@@ -23,8 +19,6 @@ router.get('/', (req, res, next) => {
     }
     res.json({ temps: data });
   });
-
-  db.destroy();
 });
 
 // GET temperature by id
