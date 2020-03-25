@@ -1,4 +1,4 @@
-// require('dotenv').config()
+require('dotenv').config()
 
 module.exports = {
   dbAddr: process.env.DB_ADDR,

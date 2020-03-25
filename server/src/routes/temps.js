@@ -6,7 +6,7 @@ const { db } = require('../db/connection');
 
 db.connect();
 
-db.query('CREATE TABLE IF NOT EXISTS temps(id int NOT NULL AUTO_INCREMENT, sensor_id VARCHAR(50) NOT NULL, temperature float NOT NULL, location VARCHAR(50) NOT NULL, recorded_at TIMESTAMP NOT NULL, primary key(id));');
+db.query('CREATE TABLE IF NOT EXISTS temps(id int NOT NULL AUTO_INCREMENT, sensor_id VARCHAR(50) NOT NULL, temperature float NOT NULL, recorded_at TIMESTAMP NOT NULL, primary key(id));');
 
 // GET all temps
 router.get('/', (req, res, next) => {
@@ -44,16 +44,14 @@ router.post('/new', (req, res, next) => {
     });
   }
 
-  db.query(`INSERT INTO temps(sensor_id, temperature, location, recorded_at) \
+  db.query(`INSERT INTO temps(sensor_id, temperature, recorded_at) \
       VALUES(\
         "${req.body.sensor_id}", \
         ${req.body.temperature}, \
-        "${req.body.location}", \
         "${req.body.recorded_at}")`,
   (err, data, fields) => {
     if (err) {
       console.log(err);
-      res.json({ error: err });
     }
 
     res.json({
