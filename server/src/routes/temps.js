@@ -1,21 +1,26 @@
-const express = require('express');
-
-const router = express.Router();
-const mysql = require('mysql');
+const router = require('express').Router();
 const { db } = require('../db/connection');
 
 db.connect();
 
-db.query('CREATE TABLE IF NOT EXISTS temps(id int NOT NULL AUTO_INCREMENT, sensor_id VARCHAR(50) NOT NULL, temperature float NOT NULL, recorded_at TIMESTAMP NOT NULL, primary key(id));');
+db.query('CREATE TABLE IF NOT EXISTS \
+    temps(id int NOT NULL AUTO_INCREMENT, \
+    sensor_id VARCHAR(50) NOT NULL, \
+    temperature float NOT NULL, \
+    recorded_at TIMESTAMP NOT NULL, \
+    primary key(id));');
+
+db.destroy();
 
 // GET all temps
 router.get('/', (req, res, next) => {
+  db.connect();
   db.query('SELECT * FROM temps', (err, data, fields) => {
     if (err) {
       console.log(err);
       throw (err);
     }
-
+    db.destroy();
     res.json({ temps: data });
   });
 });

@@ -1,7 +1,0 @@
--- Create the TEMPERATURES table
-CREATE TABLE TEMPERATURES(
-  id SERIAL PRIMARY KEY,
-  temperature FLOAT NOT NULL,
-  location VARCHAR(40) NOT NULL,
-  timestamp DATE NOT NULL DEFAULT NOW()
-);

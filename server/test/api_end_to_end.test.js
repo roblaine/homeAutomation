@@ -3,9 +3,9 @@ const http = require('http');
 
 describe('API Testing', () => {
   describe('Temps endpoints', () => {
-    it('Temps endpoint should return JSON with keys: [id, location, temperature, recorded_at]',
+    it('Temps endpoint should return JSON with keys: [id, temperature, recorded_at]',
       () => {
-        expectedKeys = ['id', 'location', 'recorded_at', 'temperature'];
+        expectedKeys = ['id', 'recorded_at', 'temperature'];
         let parsedData = '';
 
 	    http.get({
