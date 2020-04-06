@@ -9,7 +9,7 @@ db.query('CREATE TABLE IF NOT EXISTS \
     primary key(id));');
 
 router.get('/', (req, res, next) => {
-  db.query('SELECT * FROM sensors', (err, data, fields) => {
+  db.query(`SELECT * FROM sensors WHERE uid = ${}`, (err, data) => {
     if (err) {
       console.log(err);
       throw (err);
