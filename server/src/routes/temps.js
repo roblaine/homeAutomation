@@ -57,11 +57,10 @@ router.post('/new', (req, res, next) => {
       console.log(err);
     }
 
-  }).then(
     res.json({
       'message': `Succesfully inserted new temp: ${req.body.temperature}`
     });
-  );
+  });
 });
 
 module.exports = router;
