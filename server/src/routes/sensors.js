@@ -21,3 +21,5 @@ router.post('/find', (req, res) => {
     res.json({ sensor: data });
   });
 });
+
+module.exports = router;
