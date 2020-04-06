@@ -40,7 +40,7 @@ def run():
 
         # POST data to the server /temps/new endpoint
         temperature = sensor.read_temp()
-        recorded_at = datetime.utcnow().strftime('%Y-%s-%d %H:%m:%S')
+        recorded_at = datetime.utcnow().strftime('%Y-%m-%d %H:%m:%S')
         temp_payload = {
                 'temperature': temperature,
                 'sensor_id': sensor_id,
