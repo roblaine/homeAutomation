@@ -23,6 +23,7 @@ def run():
         sensor_id = sensor_path.split('devices/')[1]
         sensors.append(fbs('Bedroom', sensor_id, sensor_path + '/w1_slave'))
 
+    print(sensors)
     for sensor in sensors:
         # POST data to the server /temps/new endpoint
         temperature = sensor.read_temp()
