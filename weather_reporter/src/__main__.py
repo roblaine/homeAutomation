@@ -46,7 +46,7 @@ def run():
                 'sensor_id': sensor_id,
                 'location': sensor.get_name(),
                 'recorded_at': recorded_at}
-
+        print(temp_payload)
         # Send the date to the server for processing
         new_temp_ep = '/temps/new'
         temp_url = SERVER + new_temp_ep
