@@ -46,10 +46,9 @@ router.post('/new', (req, res, next) => {
   }
 
   // Get the sensor_id from the sensors table
-
   db.query(`SELECT id FROM SENSORS WHERE sensor_id = ${req.body.sensor_id}`,
     (err, data) => {
-      
+
     });
 
   db.query(`INSERT INTO temps(sensor_id, temperature, recorded_at) \
