@@ -13,7 +13,7 @@ router.post('/find', (req, res) => {
       console.log(err);
       throw (err);
     }
-    res.json({ sensor: data });
+    res.json({ data });
   });
 });
 
