@@ -33,7 +33,7 @@ def run():
         lookup_url = SERVER + lookup_ep
 
         # Get the sensor's data as a json response object
-        lookup_response = requestsl.post(sensor_url,
+        lookup_response = requests.post(sensor_url,
             data=lookup_payload).json()
         print(lookup_response)
 
