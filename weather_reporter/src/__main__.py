@@ -49,7 +49,6 @@ def run():
         # Send the date to the server for processing
         new_temp_ep = '/temps/new'
         temp_url = SERVER + new_temp_ep
-        print(url)
 
         temp_response = requests.post(temp_url, data=temp_payload)
         print(temp_response.json())
