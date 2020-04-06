@@ -12,6 +12,7 @@ db.connect();
 router.get('/', (req, res) => {
   console.log(req.body.uid);
   console.log(req.params.uid);
+  console.log(req.query.uid);
   db.query(`SELECT * FROM sensors WHERE uid = ${req.body.uid}`, (err, data) => {
     if (err) {
       console.log(err);
