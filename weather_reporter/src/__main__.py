@@ -20,27 +20,39 @@ def run():
 
     sensors = []
     for sensor_path in sensors_glob:
-        sensor_id = sensor_path.split('devices/')[1]
-        sensors.append(fbs('Bedroom', sensor_id, sensor_path + '/w1_slave'))
+        uid = sensor_path.split('devices/')[1]
+        sensors.append(fbs('Bedroom', uid, sensor_path + '/w1_slave'))
 
     print(sensors)
     for sensor in sensors:
+        # Look up the sensor id from the sensors table for the FK
+        sensor_id = None
+        lookup_payload = { 'uid': sensor.uid }
+
+        lookup_ep = '/sensors'
+        lookup_url = SERVER + lookup_ep
+
+        # Get the sensor's data as a json response object
+        lookup_response = requestsl.post(sensor_url,
+            data=lookup_payload).json()
+        print(lookup_response)
+
         # POST data to the server /temps/new endpoint
         temperature = sensor.read_temp()
         recorded_at = datetime.utcnow().strftime('%Y-%M-%d %H:%m:%S')
-        payload = {
+        temp_payload = {
                 'temperature': temperature,
-                'sensor_id': sensor.s_id,
+                'sensor_id': sensor_id,
                 'location': sensor.get_name(),
                 'recorded_at': recorded_at}
 
         # Send the date to the server for processing
         new_temp_ep = '/temps/new'
-        url = SERVER + new_temp_ep
+        temp_url = SERVER + new_temp_ep
         print(url)
 
-        r = requests.post(url, data=payload)
-        print(r.json())
+        temp_response = requests.post(temp_url, data=temp_payload)
+        print(temp_response.json())
 
 if __name__ == '__main__':
   run()

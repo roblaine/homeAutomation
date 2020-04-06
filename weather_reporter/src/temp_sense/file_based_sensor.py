@@ -5,16 +5,16 @@ class FileBasedSensor():
     contains the data from the sensor.
     """
 
-    def __init__(self, name, s_id, f_path):
+    def __init__(self, name, uid, f_path):
         """Args:
 
             name (String): Name of the location of the sensor
-            s_id (String): ID of sensor
+            uid (String): Unique identifier of the sensor
             f_path (String): Location of the file containing the raw data
         """
 
         self.name = name
-        self.s_id = s_id
+        self.uid = uid
         self.f_path = f_path
 
     def get_name(self):
