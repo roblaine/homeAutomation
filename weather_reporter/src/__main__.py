@@ -35,8 +35,8 @@ def run():
         # Get the sensor's data as a json response object
         lookup_response = requests.post(lookup_url,
             data=lookup_payload).json()
-        
-        sensor_id = lookup_response['data'][0]['uid']
+
+        sensor_id = lookup_response['data'][0]['id']
 
         # POST data to the server /temps/new endpoint
         temperature = sensor.read_temp()
