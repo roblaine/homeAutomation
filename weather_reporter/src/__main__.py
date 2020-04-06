@@ -29,7 +29,7 @@ def run():
         sensor_id = None
         lookup_payload = { 'uid': sensor.uid }
 
-        lookup_ep = '/sensors'
+        lookup_ep = '/sensors/find'
         lookup_url = SERVER + lookup_ep
 
         # Get the sensor's data as a json response object

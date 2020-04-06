@@ -9,7 +9,7 @@ db.connect();
 //     primary key(id));');
 
 // Get the sensor info by UID
-router.get('/', (req, res) => {
+router.post('/find', (req, res) => {
   console.log(req.body.uid);
   console.log(req.params.uid);
   console.log(req.query.uid);
