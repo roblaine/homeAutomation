@@ -11,7 +11,6 @@ const { db } = require('../db/connection');
 router.post('/find', (req, res) => {
   db.query(`SELECT * FROM sensors WHERE uid = '${req.body.uid}'`, (err, data) => {
     if (err) {
-      console.log(err);
       throw (err);
     }
     res.json({ data });

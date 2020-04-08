@@ -9,7 +9,9 @@ db.query('CREATE TABLE IF NOT EXISTS temps(id int NOT NULL AUTO_INCREMENT, senso
 router.get('/', (req, res) => {
   db.query('SELECT * FROM temps', (err, data) => {
     if (err) {
-      console.log(err);
+      res.json({
+        error: err,
+      });
       throw (err);
     }
     res.json({ temps: data });
@@ -33,27 +35,26 @@ router.get('/:id', (req, res) => {
 
 // POST temperature to the server
 router.post('/new', (req, res) => {
-
   if (!req.body || req.body.length < 3) {
     res.json({
       error: 'Insert API query must have 3 args',
     });
   }
 
-  console.log(req.body);
-
   db.query(`INSERT INTO temps(sensor_id, temperature, recorded_at) \
       VALUES(\
       "${req.body.sensor_id}", \
       ${req.body.temperature}, \
       "${req.body.recorded_at}")`,
-      (err, data, fields) => {
+  (err) => {
     if (err) {
-      console.log(err);
+      res.json({
+        error: err,
+      });
     }
 
     res.json({
-      'message': `Succesfully inserted new temp: ${req.body.temperature}`
+      message: `Succesfully inserted new temp: ${req.body.temperature}`,
     });
   });
 });
