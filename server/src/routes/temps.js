@@ -11,8 +11,8 @@ db.query('CREATE TABLE IF NOT EXISTS \
     primary key(id));');
 
 // GET all temps
-router.get('/', (req, res, next) => {
-  db.query('SELECT * FROM temps', (err, data, fields) => {
+router.get('/', (req, res) => {
+  db.query('SELECT * FROM temps', (err, data) => {
     if (err) {
       console.log(err);
       throw (err);
@@ -22,8 +22,8 @@ router.get('/', (req, res, next) => {
 });
 
 // GET temperature by id
-router.get('/:id', (req, res, next) => {
-  if (isNaN(req.params.id)) {
+router.get('/:id', (req, res) => {
+  if (Number.isNaN(req.params.id)) {
     res.json({
       error: `Id must be an integer, instead was ${typeof req.params.id}`,
     });
@@ -31,13 +31,13 @@ router.get('/:id', (req, res, next) => {
   }
 
   db.query(`SELECT * FROM temps WHERE ID = ${req.params.id}`,
-    (err, data, fields) => {
+    (err, data) => {
       res.json({ data });
     });
 });
 
 // POST temperature to the server
-router.post('/new', (req, res, next) => {
+router.post('/new', (req, res) => {
 
   if (!req.body || req.body.length < 3) {
     res.json({
