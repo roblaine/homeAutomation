@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { db } = require('../db/connection');
+require('../config/config');
 
 // SQL to reseed the DB
 // INSERT INTO sensors (location, sensor_type, uid) VALUES
@@ -9,12 +10,15 @@ const { db } = require('../db/connection');
 
 // Get the sensor info by UID
 router.post('/find', (req, res) => {
-  db.query(`SELECT * FROM sensors WHERE uid = '${req.body.uid}'`, (err, data) => {
-    if (err) {
-      throw (err);
-    }
-    res.json({ data });
-  });
+  db.query(
+    `SELECT * FROM sensors WHERE uid = '${req.body.uid}'`,
+    (err, data) => {
+      if (err) {
+        throw err;
+      }
+      res.json({ data });
+    },
+  );
 });
 
 module.exports = router;
